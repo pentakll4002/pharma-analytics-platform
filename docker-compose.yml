@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  dbt-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dbt-runner
+    env_file: .env
+    volumes:
+      - ./models:/dbt/models:ro
+      - ./dbt_project.yml:/dbt/dbt_project.yml:ro
+    entrypoint: ["dbt"]
+    command: ["run"]
+    profiles:
+      - pipeline
+
+  dbt-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dbt-test
+    env_file: .env
+    volumes:
+      - ./models:/dbt/models:ro
+      - ./dbt_project.yml:/dbt/dbt_project.yml:ro
+    entrypoint: ["dbt"]
+    command: ["test"]
+    depends_on:
+      dbt-runner:
+        condition: service_completed_successfully
+    profiles:
+      - pipeline
+
+  data-loader:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: data-loader
+    env_file: .env
+    volumes:
+      - ./data:/dbt/data:ro              # Mount data folder chứa CSV
+    entrypoint: ["python"]
+    command: ["app.py"]
+    profiles:
+      - loader                            # Chạy: docker compose --profile loader up data-loader

@@ -1,7 +1,10 @@
+dbt-snowflake>=1.7.0
+snowflake-connector-python
+python-dotenv
 pandas
 numpy
+openpyxl
 seaborn
 matplotlib
-openpyxl
 ipykernel
 scikit-learn
