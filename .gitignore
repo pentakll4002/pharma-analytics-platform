@@ -1,0 +1,40 @@
+# =====================
+# Data files (CSV, Excel) - rất nặng, không push lên git
+# =====================
+data/*.csv
+data/*.xlsx
+data/*.xls
+
+# =====================
+# Environment & Secrets
+# =====================
+.env
+.env.*
+
+# =====================
+# dbt
+# =====================
+target/
+dbt_packages/
+logs/
+
+# =====================
+# Python
+# =====================
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# =====================
+# Jupyter Notebook
+# =====================
+.ipynb_checkpoints/
+
+# =====================
+# OS
+# =====================
+.DS_Store
+Thumbs.db

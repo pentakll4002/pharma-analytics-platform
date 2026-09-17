@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: raw_data
+    database: DBT_DB
+    schema: DBT_SCHEMA
+    tables:
+      - name: BANHANG
+        description: "Bảng dữ liệu thô nạp từ các file CSV bán hàng"
+
+models:
+  - name: stg_banhang
+    description: "Model tầng Staging chuẩn hóa dữ liệu bán hàng thô"
+    columns:
+      - name: transaction_id
+        description: "Mã giao dịch bán hàng"
+      - name: branch_name
+        description: "Tên chi nhánh bán hàng"
+      - name: transaction_at
+        description: "Thời điểm phát sinh giao dịch"
+      - name: product_id
+        description: "Mã sản phẩm"
+      - name: product_name
+        description: "Tên sản phẩm"
+      - name: item_revenue
+        description: "Doanh thu từng dòng sản phẩm"

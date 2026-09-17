@@ -1,0 +1,72 @@
+version: 1
+
+models:
+  - name: dim_products
+    description: "Bảng dimension sản phẩm"
+    columns:
+      - name: product_key
+        description: "Surrogate Key sản phẩm (MD5 hash)"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_branches
+    description: "Bảng dimension chi nhánh"
+    columns:
+      - name: branch_key
+        description: "Surrogate Key chi nhánh (MD5 hash)"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_date
+    description: "Bảng dimension thời gian với các thuộc tính ngày"
+    columns:
+      - name: date_key
+        description: "Surrogate Key ngày (MD5 hash)"
+        tests:
+          - unique
+          - not_null
+      - name: date_day 
+        description: "Day (Not hash)"
+
+
+  - name: dim_categories
+    description: "Bảng dimension category"
+    columns:
+      - name: category_key
+        description: "Surrogate Key category (MD5 hash)"
+        tests:
+          - unique
+          - not_null
+      - name: category_path
+        description: "Path của category"
+
+  - name: fct_sales
+    description: "Bảng Fact chi tiết bán hàng - Star Schema"
+    columns:
+      - name: transaction_id
+        description: "Mã giao dịch"
+        tests:
+          - not_null
+      - name: branch_key
+        description: "FK tới dim_branches"
+        tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_branches')
+                field: branch_key
+      - name: product_key
+        description: "FK tới dim_products"
+        tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_products')
+                field: product_key
+      - name: date_key
+        description: "FK tới dim_date"
+        tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_date')
+                field: date_key
